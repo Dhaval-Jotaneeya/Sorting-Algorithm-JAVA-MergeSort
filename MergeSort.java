@@ -1,4 +1,3 @@
-
 class Merge
 {
     void MergeTwoArray(int left[], int right[] , int Array[] )
