@@ -1,92 +1,57 @@
-class Merge
-{
-    void MergeTwoArray(int left[], int right[] , int Array[] )
-    {
-        int leftLength = left.length;
-        int rightlength = right.length;
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        while ( i < leftLength && j < rightlength )  
-        {
-            if ( left[i] <= right[j] ) 
-            {
-                Array[k] = left[i];
-                i++;
-                k++;    
-            } 
-            else 
-            {
-                Array[k] = right[j];
-                j++;
-                k++;    
-            }
-        }
-        while ( i < leftLength ) 
-        {
-            Array[k] = left[i];
-            i++;
-            k++;     
-        }
-        while ( j < rightlength ) 
-        {
-            Array[k] = right[j];
-            j++;
-            k++;    
-        }
-    }
+package sorting_algo;
 
-    int[] sorting( int Array[] )
-    {
-        int length = Array.length;
-
-        if ( length < 2 ) 
-        {
-            return Array;
-        }
-        else
-        {
-            int middle = length/2 ;
-
-            int left[] = new int[middle];
-            int right[] = new int[length - middle];
-    
-            for (int i = 0; i < middle; i++) {
-                left[i] = Array[i];
-            }
-    
-            for (int i = middle; i < length ; i++) {
-                right[i-middle] = Array[i];
-            }
-    
-            sorting(left);
-            sorting(right);
-            MergeTwoArray(left, right, Array);
-            
-            return Array;
-        }
-        
-    }
-}
-
-/**
- * MergeSort
- */
 public class MergeSort {
 
-    public static void main(String[] args) {
-        
-        int Array[] = {1,5,9,2,6,3,4,8,7};
-        Merge m1 = new Merge();
-        long startTime = System.nanoTime();
-        int sortedArray[] = m1.sorting(Array);
-        long endTime = System.nanoTime();
-        for (int i = 0; i < 9; i++) 
-        {
-            System.out.println(sortedArray[i]);
-        }        
-        System.out.println("Total Time in Neno Second: "+ (endTime-startTime));
-
-
-    }
+	public static void main(String[] args) {
+		
+		int arr[] = mergeSort(new int[] {34,6,78,34,87,98,56,98,0,-76,-54,-65,999}, 0, 12);
+		for(int i=0; i<arr.length; i++) {
+			System.out.print(arr[i]+" ");
+		}
+	}	
+	public static int[] mergeSort(int[] a, int left, int right) {
+		if(left<right) {
+			int mid = (left+right)/2;
+			mergeSort(a, left, mid);
+			mergeSort(a, mid+1, right);
+			merge(a, left, mid, right);
+		}
+		return a;		
+	}
+	public static int[] merge(int[] a, int left, int mid, int right) {
+		int b[] = new int[a.length];
+		
+		int i = left;
+		int j = mid+1;
+		int k = left;
+		while(i<=mid && j<=right) {
+			if(a[i]<a[j]) {
+				b[k]=a[i];
+				i++;
+			}
+			else {
+				b[k]=a[j];
+				j++;
+			}
+			k++;
+		}
+		if(i>mid) {
+			while(j<=right) {
+				b[k]=a[j];
+				k++;
+				j++;
+			}
+		}
+		else {
+			while(i<=mid) {
+				b[k]=a[i];
+				k++;
+				i++;
+			}
+		}
+		for(k=left; k<=right; k++) {
+			a[k]=b[k];
+		}
+		return a;
+	}	
 }
